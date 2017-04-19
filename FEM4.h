@@ -223,7 +223,7 @@ void FEM<dim>::assemble_system() {
     Vector<double>     Flocal (dofs_per_elem);
 
     std::vector<unsigned int> local_dof_indices (dofs_per_elem); //This relates local dof numbering to global dof numbering
-    double        rho = 3.8151;                            //EDIT - specify the specific heat per unit volume
+    double        rho = 3.8151 *pow(10, 6);                            //EDIT - specify the specific heat per unit volume
 
     //loop over elements
     typename DoFHandler<dim>::active_cell_iterator elem = dof_handler.begin_active (),
@@ -375,7 +375,7 @@ void FEM<dim>::solve_trans() {
         //Find D_tilde. Remember, at this point D_trans = D_n and V_trans = V_n
         //EDIT
         // FIRST STEP
-        D_tilde.add(1.0, D_trans);
+        D_tilde = D_trans;
         D_tilde.add(delta_t * (1 - alpha), V_trans);
 
         /*Use D_tilde to update V_trans from V_n to V_{n+1}. This involves solving
