@@ -223,7 +223,7 @@ void FEM<dim>::assemble_system() {
     Vector<double>     Flocal (dofs_per_elem);
 
     std::vector<unsigned int> local_dof_indices (dofs_per_elem); //This relates local dof numbering to global dof numbering
-    double        rho = 3.8151 *pow(10, 6);                            //EDIT - specify the specific heat per unit volume
+    double        rho = 3.8151 * pow(10, 6);                           //EDIT - specify the specific heat per unit volume
 
     //loop over elements
     typename DoFHandler<dim>::active_cell_iterator elem = dof_handler.begin_active (),
@@ -477,7 +477,7 @@ double FEM<dim>::l2norm() {
                 u_trans += D_trans[local_dof_indices[A]] * fe_values.shape_value(A, q);
             }
             //EDIT - define the l2norm of the difference between u_steady and u_trans
-            l2norm = (u_steady - u_trans) * (u_steady - u_trans) * fe_values.JxW(q);
+            l2norm += (u_steady - u_trans) * (u_steady - u_trans) * fe_values.JxW(q);
         }
 
     }
